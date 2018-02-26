@@ -1,0 +1,15 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "extends": "airbnb-base",
+  "parser": "babel-eslint",
+  "rules": {
+    "linebreak-style": ["error", "windows"],
+    "no-console":"off",
+    "max-len":"off",
+    "consistent-return": 0,
+    "indent": ["error", 2]
+  }
+}
