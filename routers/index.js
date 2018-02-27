@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const journal = require('./journal');
 const bills = require('./bills');
+const category = require('./category');
 
 router.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -26,5 +27,6 @@ router.use((req, res, next) => {
 
 router.use('/journal', journal);
 router.use('/bills', bills);
+router.use('/category', category);
 
 module.exports = router;
