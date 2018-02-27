@@ -35,19 +35,37 @@ router.post('/', journalSchema, (req, res, next) => {
     if (!result.isEmpty()) {
       res.status(400).json({ errors: result.array() });
     } else {
-      res.json(req.body);
+      req.app.locals.db.collection('journal').insertOne(req.body, (err) => {
+        if (err) {
+          next(new Error(err.message));
+        } else {
+          res.status(200).json(req.body);
+        }
+      });
     }
   } catch (err) {
     next(err);
   }
-  // const { body } = req;
-  // req.app.locals.db.collection('journal').insertOne(body, (err, result) => {
-  //   if (err) {
-  //     next(new Error(err.message));
-  //   } else {
-  //     console.log(result);
-  //   }
-  // });
+});
+
+router.put('/:id', journalSchema, (req, res, next) => {
+  try {
+    const result = validationResult(req).formatWith(errorFormatter);
+    const id = new ObjectID(req.params.id);
+    if (!result.isEmpty()) {
+      res.status(400).json({ errors: result.array() });
+    } else {
+      req.app.locals.db.collection('journal').updateOne({ _id: id }, { $set: req.body }, (err) => {
+        if (err) {
+          next(new Error(err.message));
+        } else {
+          res.status(200).json(req.body);
+        }
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
