@@ -68,4 +68,19 @@ router.put('/:id', journalSchema, (req, res, next) => {
   }
 });
 
+router.delete('/:id', (req, res, next) => {
+  try {
+    const id = new ObjectID(req.params.id);
+    req.app.locals.db.collection('journal').deleteOne({ _id: id }, (err) => {
+      if (err) {
+        next(new Error(err.message));
+      } else {
+        res.status(200).json({});
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
